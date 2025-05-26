@@ -35,3 +35,4 @@ logging:
   level:
     com.unicorn: DEBUG
     org.hibernate.SQL: TRACE
+
