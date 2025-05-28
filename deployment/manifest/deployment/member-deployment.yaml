@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: member
+  namespace: dg0409-lifesub-ns
+  labels:
+    app: member
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: member
+  template:
+    metadata:
+      labels:
+        app: member
+    spec:
+      imagePullSecrets:
+      - name: acr-secret
+      containers:
+      - name: member
+        image: acrdigitalgarage02.azurecr.io/dg0409/member:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+        resources:
+          requests:
+            cpu: 256m
+            memory: 256Mi
+          limits:
+            cpu: 1024m
+            memory: 1024Mi
+        env:
+        - name: SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: member-config
+              key: SERVER_PORT
+        envFrom:
+        - configMapRef:
+            name: lifesub-common-config
+        - configMapRef:
+            name: member-config
+        - secretRef:
+            name: lifesub-secret
