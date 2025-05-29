@@ -321,7 +321,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host : dg0409.20.249.184.228.nip.io 	
+	  http:
         paths:
           - path: /member(/|$)(.*)
             pathType: ImplementationSpecific
